@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <label for="idCancion">Id de la canción:</label>
+    <input type="text" id="idCancion">
+    <button id="button">Consultar!</button>
+
+    <div id="result"></div>
+    <script>
+        // fetch('https://jsonplaceholder.typicode.com/todos/1')
+        //     .then(response => response.json())
+            // .then(json => {
+            //     console.log(json)
+            //     document.body.innerHTML = `
+            //     <div class="container">
+            //         <h1>Título: ${json.title}</h1>
+            //         <div>id: ${json.id}</div>
+            //         <div>userId: ${json.userId}</div>
+            //         <div>completed: ${json.completed}</div>
+            //     </div>
+            //     `;
+            // })
+
+        const executeCall = async () => {
+            const url = 'https://spotify-scraper.p.rapidapi.com/v1/track/metadata?trackId=3YBZIN3rekqsKxbJc9FZko';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '3d6ce1dc4dmsheff8f4ab64cf10cp104759jsnfc9fc7288273',
+                    'X-RapidAPI-Host': 'spotify-scraper.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    document.querySelector('#result').innerHTML = `
+                    <div>${data.name}</div>
+                    <div>${data.durationText}</div>
+                    `
+                })
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        executeCall();
+    </script>
+</body>
+</html>
